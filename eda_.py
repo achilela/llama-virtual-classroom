@@ -6,7 +6,7 @@ def validate_data(data):
     pattern = r'^[A-Z]\/[A-Z]{2}\/[A-Z]{4}\/$'
  
     # Apply the pattern to the data
-    data['valid'] = data['your_column_name'].str.contains(pattern)
+    data['valid'] = data['Notification Description'].str.contains(pattern)
  
     # Split the data into valid and invalid
     valid_data = data[data['valid']]
