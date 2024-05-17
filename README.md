@@ -1,4 +1,4 @@
-# Naming Convention Validator
+## Naming Convention Validator
  
 This project aims to validate naming conventions in a given Excel file and prepare the data for creating a naming notification spam classifier. The goal is to use this validated data to fine-tune a large language model (LLM) such as Phi-3 or Llama3 for spam classification purposes.
  
