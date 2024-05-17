@@ -1,32 +1,35 @@
-import streamlit as st
 import pandas as pd
+import streamlit as st
+import re
  
-def validate_data(data):
-    # Define the pattern
-    pattern = r'^[A-Z]\/[A-Z]{2}\/[A-Z]{4}\/$'
+def validate_description(description):
+    pattern = r'^[ASR]/[A-Z]{2}/[A-Z]{4}/'
+    return bool(re.match(pattern, description))
  
-    # Apply the pattern to the data
-    data['valid'] = data['Notification Description'].str.contains(pattern)
+def process_file(file):
+    df = pd.read_excel(file)
+    
+    df['Valid Description'] = df['Notification Description'].apply(lambda x: 'Yes' if validate_description(str(x)) else 'No')
+    df['Invalid Description'] = df['Notification Description'].apply(lambda x: 'Yes' if not validate_description(str(x)) else 'No')
+    
+    return df
  
-    # Split the data into valid and invalid
-    valid_data = data[data['valid']]
-    invalid_data = data[~data['valid']]
+def main():
+    st.title('Naming Convention Validator')
+    
+    uploaded_file = st.sidebar.file_uploader('Choose an Excel file', type=['xlsx', 'xls'])
+    
+    if uploaded_file is not None:
+        df = process_file(uploaded_file)
+        st.write(df)
+        
+        csv = df.to_csv(index=False)
+        st.download_button(
+            label='Download CSV',
+            data=csv,
+            file_name='validated_data.csv',
+            mime='text/csv'
+        )
  
-    return valid_data, invalid_data
- 
-st.sidebar.header('Upload File')
-uploaded_file = st.sidebar.file_uploader("Choose a file", type="xlsx")
- 
-if uploaded_file is not None:
-    data = pd.read_excel(uploaded_file)
- 
-    # Validate the data
-    valid_data, invalid_data = validate_data(data)
- 
-    st.header('Valid Data')
-    st.write(valid_data)
- 
-    st.header('Invalid Data')
-    st.write(invalid_data)
-else:
-    st.info('☝️ Upload a CSV file')
+if __name__ == '__main__':
+    main()
