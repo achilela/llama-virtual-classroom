@@ -27,7 +27,7 @@ This project aims to validate naming conventions in a given Excel file and prepa
    ``` 
 2. Run the Streamlit app:
    ```
-streamlit run app.py
+   streamlit run app.py
    ```
 3. Upload an Excel file containing a "Notification Description" column using the sidebar file uploader.
  
