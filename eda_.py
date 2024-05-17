@@ -3,14 +3,14 @@ import streamlit as st
 import re
  
 def validate_description(description):
-    pattern = r'^[ASR]/[A-Z]{2}/[A-Z]{4}/'
+    pattern = r'^[ASR]/[A-Z]{2}/(?:[A-Z]{4}|[A-Z]{3}[1-4])/'  # pattern = r'^[ASR]/[A-Z]{2}/[A-Z]{4}/' #
     return bool(re.match(pattern, description))
  
 def process_file(file):
     df = pd.read_excel(file)
     
     df['Valid Description'] = df['Notification Description'].apply(lambda x: 'Yes' if validate_description(str(x)) else 'No')
-    df['Invalid Description'] = df['Notification Description'].apply(lambda x: 'Yes' if not validate_description(str(x)) else 'No')
+    df['Invalid Description'] = df['Notification Description'].apply(lambda x: 'Yes' if not validate_description(str(x)) else 'No') 
     
     return df
  
