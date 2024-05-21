@@ -15,7 +15,7 @@ This project aims to validate naming conventions in a given Excel file and prepa
     - Exactly four uppercase letters, or
     - Exactly three uppercase letters followed by a single digit from 1 to 4
   - Ending with a forward slash
-- Add "Valid Description" and "Invalid Description" columns to indicate whether each entry follows the naming convention or not
+- Add "Valid Description == Yes" and "Invalid Description == No" columns to indicate whether each entry follows the naming convention as per Unisup procedure
 - Display the processed data in a Streamlit web app
 - Download the processed data as a CSV file
  
